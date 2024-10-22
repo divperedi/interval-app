@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Mulish", sans-serif;
+  font-optical-sizing: auto;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  font-family: "Mulish", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.slogan {
+  color: #ffffff;
+  font-size: 14px;
+  font-family: "Mulish", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: light;
+  padding: 6px;
+}
+
+.top-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* align-items: center; */
+}
+
+.app-name {
+  text-align: center;
+  color: black;
+  letter-spacing: 3px;
+  font-weight: 300;
+}
+
+.set-timer-container,
+.analog-timer-container,
+.digital-timer-container,
+.text-timer-container,
+.alarm-container,
+.break-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 20px;
+}
+
+.timer-btn {
+  align-self: center;
+  border-radius: 5px;
+  gap: 10px;
+  font-size: 24px;
+  height: 51px;
+  margin-bottom: 35px;
+  background-color: transparent;
+  transition: all .5s ease-in-out;
+}
+
+.timer-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.timer-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .alarm-wrapper,
+.break-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-top: 350px;
+} */
+
+body.active-modal {
+  overflow-y: hidden;
+  position: fixed;
+}
+
+.btn-modal {
+  padding: 10px 20px;
+  display: block;
+  margin: 100px auto 0;
+  font-size: 18px;
+}
+
+.modal, .overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  z-index: 9999;
+}
+
+.overlay {
+  background: rgba(49,49,49,0.8);
+}
+
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1.4;
+  background: #f1f1f1a6;
+  padding: 14px 28px;
+  border-radius: 3px;
+  height: 110vh;
+  width: 100vw;
+}
+
+.modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 300px;
+  margin-left: 30%;
+  text-align: left;
+}
+
+li {
+  list-style: none;
+}
+
+.menu-img-modal {
+  margin-top: 53px;
+  margin-left: -8px;
+  cursor: pointer;
+}
+
+.menu-img {
+  cursor: pointer;
+}
+
+.alarm-container {
+  display: flex;
+}
+
+.alarm-text {
+  color: white;
+}
+
+.minutes-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 200px;
+}
+
+.breaks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.breaks,
+.timer-btn {
+  width: 100%;
+  width: 279px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.checkbox-div {
+  justify-content: center;
+  width: 279px;
+}
+
+.minutes-left-arrow,
+.minutes-right-arrow {
+  background-color: transparent;
+  border: none;
+}
+
+.time-desc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.minutes-text {
+  font-size: 85px;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-weight: 500;
+}
+
+.left-arrow,
+.right-arrow {
+  width: 5vw;
+  cursor: pointer;
+}
+
+h5 {
+  color: gray;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+label {
+  font-size: 20px;
+  padding: 8px;
+  vertical-align: middle;
+  letter-spacing: 2px;
+}
+
+input {
+  vertical-align: middle;
+}
+
+#checkbox {
+  width: 23px;
+  height: 30px;
+  background:white;
+  border-radius:5px;
+  border:2px solid #555;
+  cursor: pointer;
+}
+
+.middle-to-bottom {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.analog-clock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clock-img {
+  width: 300px;
+  height: 300px;
+  position: relative;
+}
+
+.minute-hand {
+  width: 5px;
+  height: 133px;
+  border-radius: 7px;
+  background-color: black;
+  transform-origin: bottom center;
+  position: absolute;
+  top: 47%;
+  left: 50.5%;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.second-hand {
+  width: 2px;
+  height: 125px;
+  border-radius: 2px;
+  background-color: gray;
+  transform-origin: bottom center;
+  position: absolute;
+  top: 47%;
+  left: 50.2%; 
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.black-center {
+  background-color: black;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gray-center {
+  background-color: gray;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.break-container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
+  align-items: center;
+}
+
+/* Rings Wrapper */
+.rings-wrapper {
+  position: relative; /* This makes the wrapper the reference point for absolute positioning */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.small-ring,
+.medium-ring,
+.big-ring,
+.bigger-ring {
+  position: absolute; /* Stack the rings on top of each other */
+  display: flex; /* This will help align the content inside the ring */
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+}
+
+/* .ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
+
+.small-ring {
+  width: 33%;
+  left: 33.5%;
+  top: 41.5%;
+}
+
+.medium-ring {
+  width: 60%;
+}
+
+.big-ring {
+  width: 92%;
+}
+
+.bigger-ring {
+  width: 100vw;
+}
+
+/* Content Wrapper */
+.break-content {
+  position: relative;
+  z-index: 1; /* Ensure content appears above rings */
+  text-align: center;
+  color: white;
+  margin-top: 12vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 17px;
+}
+
+.alarm-wrapper {
+  position: relative;
+  z-index: 1; /* Ensure content appears above rings */
+  text-align: center;
+  color: white;
+  margin-top: 7.3vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Break Icon */
+.break-icon {
+  width: 20%;
+  max-width: 100px; 
+  padding: 5px;
+}
+
+/* Pause Text */
+.pause {
+  font-size: 5vw;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.alarm-text {
+  font-size: 8vw;
+  margin-bottom: 10px;
+  margin-top: 7px;
+}
+
+/* Time Left Text */
+.time-left{
+  font-size: 4vw;
+  color: gray;
+}
+
+.alarm-icon {
+  width: 89%;
+  padding: 9px;
+  max-width: 100px;
+}
+
+.digital-time, 
+.text-time {
+  font-size: 5vw;
+  color: black;
+  text-align: center;
+}
+/* Responsive Text Scaling */
+@media only screen and (max-width: 600px) {
+  .pause {
+    font-size: 7vw;
+  }
+
+  .time-left {
+    font-size: 5vw;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .small-ring {
+    left: 33.5%;
+    top: 39.5%;}
+
+  .bigger-ring {
+    width: 100vw;
+  }
+
+  .break-content {
+    margin-top: 16.5vh;
+  }
+
+  .break-icon {
+    padding: 5px;
+  }
+
+  .alarm-icon {
+    padding: 10px;
+  }
+
+  .alarm-wrapper {
+    margin-top: 9.5vh;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .break-content {
+    margin-top: 14vh;
+  }
+
+  .small-ring {
+    left: 33.4%;
+    top: 41.5%;
+  }
+}
