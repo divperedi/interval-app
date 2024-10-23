@@ -40,7 +40,7 @@ function TextTimer() {
 
         let secondWords = '';
         if (ss === 0) {
-            secondWords = "";
+            secondWords = "ZERO SECONDS";
         } else if (ss === 1) {
             secondWords = "ONE SECOND";
         } else if (ss < 20) {
