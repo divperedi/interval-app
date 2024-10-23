@@ -6,7 +6,7 @@ import AnalogTimer from './pages/AnalogTimer';
 import DigitalTimer from './pages/DigitalTimer';
 import TextTimer from './pages/TextTimer';
 import Alarm from './pages/Alarm';
-import Break from './pages/Break';
+// import Break from './pages/Break';
 import { TimerProvider } from './components/TimerContext';
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
         <Route path="/timer/digital" element={<DigitalTimer />} />
         <Route path="/timer/text" element={<TextTimer />} />
         <Route path="/timer/alarm" element={<Alarm />} />
-        <Route path="/timer/break" element={<Break />} />
+        {/* <Route path="/timer/break" element={<Break />} /> */}
       </Routes>
     </TimerProvider>
   )

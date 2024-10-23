@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useRef } from 'react';
 import Timer from 'easytimer.js';
+import { useNavigate } from 'react-router-dom';
 
 export const TimerContext = createContext();
 
@@ -10,8 +11,11 @@ export const TimerProvider = ({ children }) => {
     const [isTimerFinished, setIsTimerFinished] = useState(false);
     const [isBreakActive, setIsBreakActive] = useState(false);
     const [isBreakFinished, setIsBreakFinished] = useState(false);
+    const [showMessage, setShowMessage] = useState(false);
+    const [breakMessageShown, setBreakMessageShown] = useState(false);
+    const [timerKey, setTimerKey] = useState(0);
+    const navigate = useNavigate();
 
-    // Use refs to store the latest values of these states
     const isIntervalModeRef = useRef(false);
     const isBreakModeRef = useRef(false);
     const initialMinutesRef = useRef(0);
@@ -35,9 +39,6 @@ export const TimerProvider = ({ children }) => {
     }, [timer, isBreakActive]);
 
     const initializeTimer = (minutes, intervalMode = false, breakMode = false) => {
-        console.log("initializeTimer called with:", { minutes, intervalMode, breakMode });
-
-        // Store the latest state in refs
         isIntervalModeRef.current = intervalMode;
         isBreakModeRef.current = breakMode;
         initialMinutesRef.current = minutes;
@@ -45,12 +46,12 @@ export const TimerProvider = ({ children }) => {
         setIsTimerFinished(false);
         setIsBreakActive(false);
         setIsBreakFinished(false);
+        setBreakMessageShown(false);
 
-        // Remove any existing targetAchieved listener before adding a new one
         timer.removeEventListener('targetAchieved', handleTargetAchieved);
 
-        console.log("Timer started for:", minutes, "minutes. Interval Mode:", intervalMode, "Break Mode:", breakMode);
         startTimer(minutes);
+        setTimerKey(prevKey => prevKey + 1);
     };
 
     const startTimer = (minutes) => {
@@ -59,59 +60,57 @@ export const TimerProvider = ({ children }) => {
     };
 
     const handleTargetAchieved = () => {
-        console.log("Target achieved. Timer ended.");
-        const isIntervalMode = isIntervalModeRef.current;
-        const isBreakMode = isBreakModeRef.current;
-
-        console.log("Interval Mode:", isIntervalMode, "Break Mode:", isBreakMode);
-    
-        if (isBreakMode && !isBreakActive) {
-            console.log("Starting a 5-minute break.");
-            startBreak();
-        } else if (isIntervalMode) {
-            console.log("Restarting the timer for intervals.");
-            restartInterval();
+        if (isIntervalModeRef.current || isBreakModeRef.current) {
+            setShowMessage(true);
+            setTimeout(() => {
+                setShowMessage(false);
+                if (isBreakModeRef.current && !isBreakActive && !breakMessageShown) {
+                    setBreakMessageShown(true);
+                    startBreak();
+                } else if (isIntervalModeRef.current) {
+                    restartInterval();
+                } else {
+                    setIsTimerFinished(true);
+                    navigate('/timer/alarm');
+                    timer.removeEventListener('targetAchieved', handleTargetAchieved);
+                }
+            }, 1000);
         } else {
-            console.log("Timer finished completely.");
             setIsTimerFinished(true);
-            // Clean up event listeners once the timer is fully completed
+            navigate('/timer/alarm');
             timer.removeEventListener('targetAchieved', handleTargetAchieved);
         }
     };
 
     const startBreak = () => {
-        console.log("Break started for 5 minutes.");
         setIsBreakActive(true);
-        timer.removeEventListener('targetAchieved', handleTargetAchieved); // Remove the previous listener
-        timer.start({ countdown: true, startValues: { minutes: 5 } }); // Set break time to 5 minutes
-        timer.addEventListener('targetAchieved', handleBreakEnd); // Add the break end listener
+        timer.removeEventListener('targetAchieved', handleTargetAchieved);
+        timer.start({ countdown: true, startValues: { minutes: 5 } });
+        timer.addEventListener('targetAchieved', handleBreakEnd);
     };
 
     const handleBreakEnd = () => {
-        console.log("Break ended. Resuming interval.");
         setIsBreakActive(false);
         setIsBreakFinished(true);
-        isBreakModeRef.current = false; // Reset break mode to avoid continuous break loops
+        isBreakModeRef.current = true;
 
-        // Restart the timer after the break is over
-        timer.removeEventListener('targetAchieved', handleBreakEnd); // Remove the break listener
-        startTimer(initialMinutesRef.current); 
+        setBreakMessageShown(false);
+        timer.removeEventListener('targetAchieved', handleBreakEnd);
+        startTimer(initialMinutesRef.current);
     };
 
     const restartInterval = () => {
-        console.log("Restarting interval for:", initialMinutesRef.current, "minutes.");
-        startTimer(initialMinutesRef.current); // Restart the interval timer
+        startTimer(initialMinutesRef.current);
     };
 
     const stopTimer = () => {
-        console.log("Timer stopped.");
         timer.stop();
         setIsTimerFinished(true);
-        timer.removeEventListener('targetAchieved', handleTargetAchieved); // Clean up listeners
+        timer.removeEventListener('targetAchieved', handleTargetAchieved);
     };
 
     return (
-        <TimerContext.Provider value={{ timer, time, breakTimeLeft, initializeTimer, stopTimer, isTimerFinished, isBreakFinished, isBreakActive }}>
+        <TimerContext.Provider value={{ timer, time, breakTimeLeft, initializeTimer, stopTimer, isTimerFinished, isBreakFinished, isBreakActive, showMessage, isBreakMode: isBreakModeRef.current, timerKey }}>
             {children}
         </TimerContext.Provider>
     );

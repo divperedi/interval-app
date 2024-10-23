@@ -8,6 +8,11 @@
   font-optical-sizing: auto;
 }
 
+html, body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -141,7 +146,7 @@ body.active-modal {
   padding: 14px 28px;
   border-radius: 3px;
   height: 110vh;
-  width: 100vw;
+  width: 101vw;
 }
 
 .modal-list {
@@ -265,6 +270,7 @@ input {
 
 .analog-clock {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -283,7 +289,7 @@ input {
   transform-origin: bottom center;
   position: absolute;
   top: 47%;
-  left: 50.5%;
+  left: 50.4%;
   transform: translate(-50%, -100%) rotate(0deg);
 }
 
@@ -331,9 +337,8 @@ input {
   align-items: center;
 }
 
-/* Rings Wrapper */
 .rings-wrapper {
-  position: relative; /* This makes the wrapper the reference point for absolute positioning */
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -345,10 +350,10 @@ input {
 .medium-ring,
 .big-ring,
 .bigger-ring {
-  position: absolute; /* Stack the rings on top of each other */
-  display: flex; /* This will help align the content inside the ring */
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
 }
 
 /* .ring {
@@ -376,10 +381,9 @@ input {
   width: 100vw;
 }
 
-/* Content Wrapper */
 .break-content {
   position: relative;
-  z-index: 1; /* Ensure content appears above rings */
+  z-index: 1;
   text-align: center;
   color: white;
   margin-top: 12vh;
@@ -391,7 +395,7 @@ input {
 
 .alarm-wrapper {
   position: relative;
-  z-index: 1; /* Ensure content appears above rings */
+  z-index: 1; 
   text-align: center;
   color: white;
   margin-top: 7.3vh;
@@ -401,14 +405,12 @@ input {
   gap: 10px;
 }
 
-/* Break Icon */
 .break-icon {
   width: 20%;
   max-width: 100px; 
   padding: 5px;
 }
 
-/* Pause Text */
 .pause {
   font-size: 5vw;
   margin-bottom: 10px;
@@ -421,25 +423,107 @@ input {
   margin-top: 7px;
 }
 
-/* Time Left Text */
 .time-left{
   font-size: 4vw;
   color: gray;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-5px) rotate(-5deg); }
+  50% { transform: translateX(5px) rotate(5deg); }
+  75% { transform: translateX(-5px) rotate(-5deg); }
+  100% { transform: translateX(0) rotate(0deg); }
 }
 
 .alarm-icon {
   width: 89%;
   padding: 9px;
   max-width: 100px;
+  animation: shake 0.5s infinite;
 }
 
-.digital-time, 
-.text-time {
-  font-size: 5vw;
+.digital-time{
+  font-size: 14vw;
   color: black;
   text-align: center;
 }
-/* Responsive Text Scaling */
+
+.text-time {
+  font-size: 8vw;
+  color: black;
+  text-align: left;
+  padding: 15px;
+}
+
+.text-clock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.bigger-ring {
+  animation: fadeIn 1s ease-in-out forwards, pulsate 2s infinite;
+  animation-delay: 0s;
+}
+
+.big-ring {
+  animation: fadeIn 1s ease-in-out forwards, pulsate 2s infinite;
+  animation-delay: 0.5s;
+}
+
+.medium-ring {
+  animation: fadeIn 1s ease-in-out forwards, pulsate 2s infinite;
+  animation-delay: 1s;
+}
+
+.small-ring {
+  animation: fadeIn 1s ease-in-out forwards, pulsate 2s infinite;
+  animation-delay: 1.5s;
+}
+
+.break-indicator {
+  padding: 20px;
+  font-size: 28px;
+  color: rgb(247, 74, 17);
+  text-align: center;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.5s, opacity 0.5s ease;
+}
+
+.clock {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+
 @media only screen and (max-width: 600px) {
   .pause {
     font-size: 7vw;
@@ -447,6 +531,11 @@ input {
 
   .time-left {
     font-size: 5vw;
+  }
+
+  .menu-img-modal {
+    margin-top: 51px;
+    margin-left: -8px;
   }
 }
 
@@ -474,6 +563,15 @@ input {
   .alarm-wrapper {
     margin-top: 9.5vh;
   }
+
+  .menu-img-modal {
+    margin-top: 39px;
+    margin-left: -7px;
+  }
+
+  .modal-list {
+    margin-top: 200px;
+  }
 }
 
 @media only screen and (max-width: 360px) {
@@ -484,5 +582,25 @@ input {
   .small-ring {
     left: 33.4%;
     top: 41.5%;
+  }
+
+  .modal-content {
+    width: 100vw;
+  }
+
+  .menu-img-modal {
+    margin-top: 43px;
+    margin-left: -6px;
+  }
+
+  .modal-list {
+    margin-top: 200px;
+  }
+}
+
+@media only screen and (min-width: 390px) and (max-width: 400px) {
+  .menu-img-modal {
+    margin-top: 48px;
+    margin-left: -8px;
   }
 }

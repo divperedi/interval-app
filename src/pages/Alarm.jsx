@@ -9,7 +9,7 @@ function Alarm() {
 
     useEffect(() => {
         if (!isTimerFinished) {
-            navigate('/timer'); // Navigate back to timer if not finished
+            navigate('/timer');
         }
     }, [isTimerFinished, navigate]);
 
@@ -20,7 +20,7 @@ function Alarm() {
     return (
         <div className="alarm-container">
             <section className="rings-wrapper">
-                <img src="/ring4.png" alt="bigger ring" className="bigger-ring"/>
+                <img src="/ring4.png" alt="bigger ring" className="bigger-ring" />
                 <img src="/ring3.png" alt="big ring" className="big-ring"/>
                 <img src="/ring2.png" alt="medium ring" className="medium-ring"/>
                 <section className="small-ring-container">

@@ -9,9 +9,9 @@ function Loading() {
                 <img src="/interval.png" alt="interval logo" className="interval-img" />
                 <motion.h2 
                     className="slogan"
-                    initial={{ opacity: 0, scale: 0 }}
+                    initial={{ opacity: 0.5, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1 }}
+                    transition={{ duration: 2 }}
                 >For all your timing needs</motion.h2>
             </Link>
         </section>

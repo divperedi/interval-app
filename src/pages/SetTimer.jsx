@@ -15,11 +15,9 @@ function SetTimer() {
     const navigate = useNavigate();
 
     function handleStartTimer() {
-        stopTimer(); // Stop any ongoing timer
-        // Pass the selected minutes, and whether intervals or breaks are checked
+        stopTimer();
         initializeTimer(minutes[currentMinute], isIntervalChecked, isBreakChecked);
         
-        // Pass both `isIntervalChecked` and `isBreakChecked` to ensure correct mode is passed
         navigate('/timer/analog', { 
             state: { 
                 selectedMinutes: minutes[currentMinute], 
@@ -66,7 +64,7 @@ function SetTimer() {
                         id="interval-checkbox"
                         checked={isIntervalChecked}
                         onChange={() => setIsIntervalChecked(!isIntervalChecked)}
-                        disabled={isBreakChecked} // Disable if break is checked
+                        disabled={isBreakChecked}
                     />
                     <label htmlFor="interval-checkbox">Intervals</label>
                 </div>
@@ -76,7 +74,7 @@ function SetTimer() {
                         id="break-checkbox"
                         checked={isBreakChecked}
                         onChange={() => setIsBreakChecked(!isBreakChecked)}
-                        disabled={isIntervalChecked} // Disable if interval is checked
+                        disabled={isIntervalChecked}
                     />
                     <label htmlFor="break-checkbox">5 min break / interval</label>
                 </div>

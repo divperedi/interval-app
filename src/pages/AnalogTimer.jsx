@@ -7,7 +7,7 @@ import { TimerContext } from '../components/TimerContext';
 function AnalogTimer() {
     const location = useLocation();
     let selectedMinutes = location.state ? location.state.selectedMinutes : 0;
-    const { timer, time, initializeTimer, stopTimer, breakTimeLeft } = useContext(TimerContext);
+    const { timer, time, initializeTimer, stopTimer, breakTimeLeft, isBreakMode, showMessage } = useContext(TimerContext);
     const navigate = useNavigate();
 
     const minuteHandRef = useRef(null);
@@ -19,18 +19,15 @@ function AnalogTimer() {
             return;
         }
 
-        // Calculate initial rotation
-        let minutesRotation = selectedMinutes * 6; // 1 minute = 6 degrees
+        let minutesRotation = selectedMinutes * 6;
 
         minuteHandRef.current = document.querySelector('.minute-hand');
         secondHandRef.current = document.querySelector('.second-hand');
 
-        // Start the timer with the selected minutes if not already running
         if (!timer.isRunning()) {
             initializeTimer(selectedMinutes);
         }
 
-        // Apply initial rotation based on current timer state
         const timeValues = timer.getTimeValues();
         const initialMinutes = timeValues.minutes;
         const initialSeconds = timeValues.seconds;
@@ -81,6 +78,7 @@ function AnalogTimer() {
             minuteHandRef.current.style.transform = `translate(-90%, -100%) rotate(0deg)`;
             secondHandRef.current.style.transform = `translate(-90%, -100%) rotate(0deg)`;
         }
+        navigate("/timer/alarm");
     }
 
     return (
@@ -90,13 +88,17 @@ function AnalogTimer() {
                 <Link to="/" className="app-name">interval</Link>
             </section>
             <section className="analog-clock">
-                <div className="clock">
-                    <img src="/clock.png" alt="clock" className="clock-img" />
-                    <div className="black-center"></div>
-                    <div className="gray-center"></div>
-                    <div className="minute-hand"></div>
-                    <div className="second-hand"></div>
-                </div>
+                {showMessage ? (
+                    <h1 className="break-indicator">{isBreakMode ? '5 MIN BREAK' : 'INTERVAL'}</h1>
+                ) : (
+                    <div className="clock">
+                        <img src="/clock.png" alt="clock" className="clock-img" />
+                        <div className="black-center"></div>
+                        <div className="gray-center"></div>
+                        <div className="minute-hand" ref={minuteHandRef}></div>
+                        <div className="second-hand" ref={secondHandRef}></div>
+                    </div>
+                )}
             </section>
             <TimerButton text="ABORT TIMER" onClick={abortTimer} />
         </div>

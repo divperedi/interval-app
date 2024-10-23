@@ -7,8 +7,8 @@ import { TimerContext } from '../components/TimerContext';
 function TextTimer() {
     const location = useLocation();
     const navigate = useNavigate();
-    
-    const { time, startTimer, stopTimer, timer, breakTimeLeft, isBreakActive, isTimerFinished } = useContext(TimerContext);
+
+    const { time, startTimer, stopTimer, timer, breakTimeLeft, isBreakActive, isTimerFinished, showMessage, isBreakMode } = useContext(TimerContext);
 
     useEffect(() => {
         if (isTimerFinished && !isBreakActive) {
@@ -40,7 +40,7 @@ function TextTimer() {
 
         let secondWords = '';
         if (ss === 0) {
-            secondWords = "ZERO SECONDS";
+            secondWords = "";
         } else if (ss === 1) {
             secondWords = "ONE SECOND";
         } else if (ss < 20) {
@@ -68,9 +68,15 @@ function TextTimer() {
                 <Link to="/" className="app-name">interval</Link>
             </section>
             <section className="text-clock">
-                <div className="clock">
-                    <p className="text-time">{printWords(isBreakActive ? breakTimeLeft : time)}</p>
-                </div>
+                {showMessage ? (
+                    <h1 className="break-indicator">{isBreakMode ? '5 MIN BREAK' : 'INTERVAL'}</h1>
+                ) : (
+                    <>
+                        <div className="clock">
+                            <p className="text-time">{printWords(isBreakActive ? breakTimeLeft : time)}</p>
+                        </div>
+                    </>
+                )}
             </section>
             <TimerButton text="ABORT TIMER" onClick={abortTimer} />
         </div>
